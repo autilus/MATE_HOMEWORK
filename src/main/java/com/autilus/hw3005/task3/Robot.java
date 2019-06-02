@@ -3,7 +3,6 @@ package com.autilus.hw3005.task3;
 import com.sun.javafx.scene.traversal.Direction;
 
 public class Robot {
-
     private int x = 0;
     private int y = 0;
     private Direction direction = Direction.UP;

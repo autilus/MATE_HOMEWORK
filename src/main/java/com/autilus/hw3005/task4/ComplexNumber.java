@@ -18,13 +18,18 @@ public final class ComplexNumber {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        ComplexNumber complexNumber = (ComplexNumber) object;
 
-        ComplexNumber complexNumber = (ComplexNumber) o;
-
-        if (Double.compare(complexNumber.re, re) != 0) return false;
+        if (Double.compare(complexNumber.re, re) != 0) {
+            return false;
+        }
         return Double.compare(complexNumber.im, im) == 0;
     }
 

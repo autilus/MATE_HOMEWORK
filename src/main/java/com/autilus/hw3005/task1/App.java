@@ -15,27 +15,26 @@ public class App {
         int[] result = new int[(a1.length + a2.length)];
         int firstArrayIndex = 0;
         int secondArrayIndex = 0;
-        for (int i = 0; i < result.length; i++) {
-            int leftNumber;
-            int rightNumber;
-            if (firstArrayIndex < a1.length) {
-                leftNumber = a1[firstArrayIndex];
-            } else {
-                leftNumber = Integer.MAX_VALUE;
-            }
-
-            if (secondArrayIndex < a2.length) {
-                rightNumber = a2[secondArrayIndex];
-            } else {
-                rightNumber = Integer.MAX_VALUE;
-            }
-            if (leftNumber < rightNumber) {
-                result[i] = leftNumber;
+        int index = 0;
+        while (firstArrayIndex < a1.length && secondArrayIndex < a2.length) {
+            if (a1[firstArrayIndex] < a2[secondArrayIndex]) {
+                result[index] = a1[firstArrayIndex];
                 firstArrayIndex++;
             } else {
-                result[i] = rightNumber;
+                result[index] = a2[secondArrayIndex];
                 secondArrayIndex++;
             }
+            index++;
+        }
+        while (firstArrayIndex < a1.length) {
+            result[index] = a1[firstArrayIndex];
+            firstArrayIndex++;
+            index++;
+        }
+        while (secondArrayIndex < a2.length) {
+            result[index] = a2[secondArrayIndex];
+            secondArrayIndex++;
+            index++;
         }
         return result;
     }

@@ -5,19 +5,13 @@ import com.sun.javafx.scene.traversal.Direction;
 public class App {
 
     public static void main(String[] args) {
-
         Robot robot = new Robot(-10, -2, Direction.UP);
-
         moveRobot(robot, 3, 5);
-
     }
 
     private static void moveRobot(Robot robot, int toX, int toY) {
-
         int tX = robot.getX();
         int tY = robot.getY();
-
-
         if (tX >= toX) {
             while (robot.getDirection() != Direction.LEFT) {
                 robot.turnLeft();
@@ -35,7 +29,6 @@ public class App {
                 tX++;
             }
         }
-
         if (tY >= toY) {
             while (robot.getDirection() != Direction.DOWN) {
                 robot.turnLeft();
@@ -44,7 +37,6 @@ public class App {
                 robot.stepForward();
                 tY--;
             }
-
         } else {
             while (robot.getDirection() != Direction.UP) {
                 robot.turnRight();
@@ -57,6 +49,4 @@ public class App {
         }
 
     }
-
-
 }
