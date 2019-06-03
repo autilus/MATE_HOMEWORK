@@ -15,4 +15,3 @@ abstract class KeywordAnalyzer implements TextAnalyzer {
         return Label.OK;
     }
 }
-/* TODO */
