@@ -1,6 +1,10 @@
 package com.autilus.hw0306.task2;
 
-import java.util.logging.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.XMLFormatter;
 
 public class App {
     public static void main(String[] args) {

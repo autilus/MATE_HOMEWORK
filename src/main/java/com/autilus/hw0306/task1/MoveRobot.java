@@ -9,19 +9,14 @@ public class MoveRobot {
                 robotConnection = robotConnectionManager.getConnection();
                 robotConnection.moveRobotTo(toX, toY);
                 isSuccess = true;
-                try {
-                    robotConnection.close();
-                } catch (Exception e) {
-                }
             } catch (RobotConnectionException e) {
-                if (robotConnection != null) {
-                    robotConnection.close();
+            } finally {
+                try {
+                    if (robotConnection != null) {
+                        robotConnection.close();
+                    }
+                } catch (RobotConnectionException e) {
                 }
-            } catch (Exception e) {
-                if (robotConnection != null) {
-                    robotConnection.close();
-                }
-                throw e;
             }
         }
         if (!isSuccess) {
