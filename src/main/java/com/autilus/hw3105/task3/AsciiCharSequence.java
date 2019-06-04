@@ -17,6 +17,9 @@ public class AsciiCharSequence implements CharSequence {
 
     @Override
     public CharSequence subSequence(int startPosition, int endPosition) {
+        if (startPosition < endPosition) {
+            throw new RuntimeException("start posotion < then end position");
+        }
         byte[] subSequence = new byte[endPosition - startPosition];
         for (int i = startPosition; i < endPosition; i++) {
             subSequence[i - startPosition] = input[i];
