@@ -1,18 +1,24 @@
 package com.autilus.hw0406.task2;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.io.ObjectInputStream;
 
 public class Car implements Serializable {
     private String name;
     private String model;
     private int year;
     private int maxSpeed;
+    private Wheel wheel;
 
-    public Car(String name, String model, int year, int maxSpeed) {
+    public Car(String name, String model, int year, int maxSpeed, Wheel wheel) {
         this.name = name;
         this.model = model;
         this.year = year;
         this.maxSpeed = maxSpeed;
+        this.wheel = wheel;
     }
 
     @Override
@@ -55,6 +61,14 @@ public class Car implements Serializable {
 
     public void setMaxSpeed(int maxSpeed) {
         this.maxSpeed = maxSpeed;
+    }
+
+    public Wheel getWheel() {
+        return wheel;
+    }
+
+    public void setWheel(Wheel wheel) {
+        this.wheel = wheel;
     }
 
     public static <T> T deepClone(T object) {
