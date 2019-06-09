@@ -19,7 +19,7 @@ class Pair<T, V> {
         return v;
     }
 
-    public static <T, V> Pair<T, V> of(T t, V v) {
+    public static <T, V> Pair of(T t, V v) {
         return new Pair<>(t, v);
     }
 
