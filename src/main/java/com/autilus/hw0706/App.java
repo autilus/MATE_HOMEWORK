@@ -19,6 +19,5 @@ public class App {
         System.out.println(list.get(5));
         System.out.println(list.get(6));
         System.out.println( list.size());
-
     }
 }

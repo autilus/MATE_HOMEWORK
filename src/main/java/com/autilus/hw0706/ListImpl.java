@@ -6,8 +6,8 @@ public class ListImpl<T> implements List<T> {
     private int size;
     private int position;
 
-    private void checkCapasity(int i) {
-        if (i >= size) {
+    private void checkCapasity(int index) {
+        if (index >= size) {
             size += size >> 1;
             array = copyToNewArray(array);
         }
@@ -29,7 +29,6 @@ public class ListImpl<T> implements List<T> {
     @Override
     public void add(T value, int index) {
         checkCapasity(index);
-        size++;
         array = copyToNewArray(array);
         System.arraycopy(array, index, array, index + 1, size - index - 1);
         array[index] = value;
@@ -41,27 +40,30 @@ public class ListImpl<T> implements List<T> {
         size = objects.length;
         array = copyToNewArray(array);
         System.arraycopy(objects, 0, array, 0, objects.length);
-        position += this.size;
+        position += size;
     }
 
     @Override
     public T get(int index) {
-        if (index >= size) {
-            return null;
-        }
+        checkIndex(index);
         return (T) array[index];
     }
 
     @Override
     public void set(T value, int index) {
-        if (index >= size) {
-            throw new ArrayIndexOutOfBoundsException("can't set nonexistent index");
-        }
+        checkIndex(index);
         array[index] = value;
+    }
+
+    public void checkIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new ArrayIndexOutOfBoundsException("can't set nonexistent index -- " + index);
+        }
     }
 
     @Override
     public T remove(int index) {
+        checkIndex(index);
         size--;
         System.arraycopy(array, index, array, index - 1, size - index - 1);
         return (T) array;
