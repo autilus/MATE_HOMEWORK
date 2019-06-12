@@ -8,7 +8,7 @@ public class ListImpl<T> implements List<T> {
 
     private void checkCapasity(int i) {
         if (i >= size) {
-            size += DEFAULT_CAPACITY / 2;
+            size += size >> 1;
             array = copyToNewArray(array);
         }
     }
@@ -20,47 +20,56 @@ public class ListImpl<T> implements List<T> {
     }
 
     @Override
-    public void add(Object value) {
+    public void add(T value) {
         checkCapasity(position);
         add(value, position);
         position++;
     }
 
     @Override
-    public void add(Object value, int index) {
+    public void add(T value, int index) {
         checkCapasity(index);
+        size++;
+        array = copyToNewArray(array);
+        System.arraycopy(array, index, array, index + 1, size - index - 1);
         array[index] = value;
     }
 
     @Override
     public void addAll(List list) {
-        Object[] obj = list.toArray();
-        size = obj.length;
+        Object[] objects = list.toArray();
+        size = objects.length;
         array = copyToNewArray(array);
-        System.arraycopy(obj, 0, this.array, 0, obj.length);
+        System.arraycopy(objects, 0, array, 0, objects.length);
+        position += this.size;
     }
 
     @Override
     public T get(int index) {
+        if (index >= size) {
+            return null;
+        }
         return (T) array[index];
     }
 
     @Override
     public void set(T value, int index) {
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException("can't set nonexistent index");
+        }
         array[index] = value;
     }
 
     @Override
     public T remove(int index) {
-        size -= 1;
-        for (int j = index; j < size; j++) {
-            array[j] = array[j + 1];
-        }
-        return (T) array;    }
+        size--;
+        System.arraycopy(array, index, array, index - 1, size - index - 1);
+        return (T) array;
+    }
 
     public T remove(T t) {
         for (int i = 0; i < size; i++) {
-            if (array[i] == t) {
+            if (array[i].equals(t)) {
                 return remove(i);
             }
         }
@@ -69,7 +78,7 @@ public class ListImpl<T> implements List<T> {
 
     @Override
     public int size() {
-        return size;
+        return array.length;
     }
 
     @Override
