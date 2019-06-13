@@ -1,78 +1,84 @@
 package com.autilus.hw0706;
 
-public class ListImpl<T> implements List<T> {
-    private static final int DEFAULT_CAPACITY = 10;
-    private Object[] array = new Object[DEFAULT_CAPACITY];
-    private int size;
-    private int position;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 
-    private void checkCapasity(int index) {
-        if (index >= size) {
-            size += size >> 1;
-            array = copyToNewArray(array);
-        }
+public class ListImpl<T> implements List<T> {
+    private int INITIAL_SIZE = 10;
+    private T[] values = (T[]) new Object[INITIAL_SIZE];
+    private int size = 0;
+
+    private void increaseArray() {
+        values = Arrays.copyOf(values, (values.length * 3) / 2);
     }
 
-    private Object[] copyToNewArray(Object[] newArray) {
-        newArray = new Object[size];
-        System.arraycopy(array, 0, newArray, 0, position);
-        return newArray;
+    private void checkIndexSize(int index) {
+        if (index < 0 || index > size) {
+            throw new NoSuchElementException();
+        }
     }
 
     @Override
     public void add(T value) {
-        checkCapasity(position);
-        add(value, position);
-        position++;
+        if (size == values.length) {
+            increaseArray();
+        }
+        values[size++] = value;
     }
 
     @Override
-    public void add(T value, int index) {
-        checkCapasity(index);
-        array = copyToNewArray(array);
-        System.arraycopy(array, index, array, index + 1, size - index - 1);
-        array[index] = value;
+    public void add(int index, T value) {
+        if (size == index) {
+            add(value);
+            return;
+        } else {
+            checkIndexSize(index);
+        }
+        if (size == values.length) {
+            increaseArray();
+        }
+        System.arraycopy(values, index, values, index + 1, size - index);
+        values[index] = value;
+        size++;
     }
 
     @Override
-    public void addAll(List list) {
-        Object[] objects = list.toArray();
-        size = objects.length;
-        array = copyToNewArray(array);
-        System.arraycopy(objects, 0, array, 0, objects.length);
-        position += size;
-    }
-
-    @Override
-    public T get(int index) {
-        checkIndex(index);
-        return (T) array[index];
-    }
-
-    @Override
-    public void set(T value, int index) {
-        checkIndex(index);
-        array[index] = value;
-    }
-
-    public void checkIndex(int index) {
-        if (index < 0 || index >= size) {
-            throw new ArrayIndexOutOfBoundsException("can't set nonexistent index -- " + index);
+    public void addAll(List<T> list) {
+        if (values.length < size + list.size()) {
+            values = Arrays.copyOf(values, size + list.size());
+        }
+        for (int i = 0; i < list.size(); i++) {
+            values[size++] = list.get(i);
         }
     }
 
     @Override
-    public T remove(int index) {
-        checkIndex(index);
-        size--;
-        System.arraycopy(array, index, array, index - 1, size - index - 1);
-        return (T) array;
+    public T get(int index) {
+        checkIndexSize(index + 1);
+        return values[index];
     }
 
-    public T remove(T t) {
-        for (int i = 0; i < size; i++) {
-            if (array[i].equals(t)) {
-                return remove(i);
+    @Override
+    public void set(int index, T value) {
+        checkIndexSize(index);
+        values[index] = value;
+    }
+
+    @Override
+    public T remove(int index) {
+        checkIndexSize(index);
+        T result = values[index];
+        System.arraycopy(values, index + 1, values, index, size - index - 1);
+        size--;
+        values = Arrays.copyOf(values, size);
+        return result;
+    }
+
+    @Override
+    public T remove(T value) {
+        for (int index = 0; index < values.length; index++) {
+            if (values[index] == value) {
+                remove(index);
             }
         }
         return null;
@@ -80,16 +86,25 @@ public class ListImpl<T> implements List<T> {
 
     @Override
     public int size() {
-        return array.length;
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        return array[0] == null;
+        return size == 0;
     }
 
     @Override
     public Object[] toArray() {
-        return array;
+        return values;
+    }
+
+    @Override
+    public String toString() {
+        return "ListImpl{" +
+                "INITIAL_SIZE=" + INITIAL_SIZE +
+                ", values=" + Arrays.toString(values) +
+                ", size=" + size +
+                '}';
     }
 }

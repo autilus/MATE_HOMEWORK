@@ -3,21 +3,26 @@ package com.autilus.hw0706;
 public class App {
     public static void main(String[] args) {
         ListImpl list = new ListImpl();
-        list.add(1);
-        System.out.println( list.size());
-        list.add(2);
-        list.add(3);
-        list.add(4);
-        list.add(5);
-        list.add(2222,6);
-        list.remove(2);
-        System.out.println(list.get(0));
-        System.out.println(list.get(1));
-        System.out.println(list.get(2));
-        System.out.println(list.get(3));
-        System.out.println(list.get(4));
-        System.out.println(list.get(5));
-        System.out.println(list.get(6));
-        System.out.println( list.size());
+        ListImpl list2 = new ListImpl();
+        System.out.println(list.isEmpty());
+        System.out.println(list.size());
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
+        list.add("e");
+        list2.add("list2 0");
+        list2.add("list2 1");
+        list2.add("list2 2");
+        list2.add("list2 3");
+        list2.add("list2 4");
+        list2.add("list2 5");
+        list.addAll(list2);
+        System.out.println(list.toString());
+        System.out.println("remove element");
+        list.remove("c");
+        System.out.println(list.toString());
+        list.remove(3);
+        System.out.println(list.toString());
     }
 }
