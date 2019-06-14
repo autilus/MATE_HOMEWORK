@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 public class ListImpl<T> implements List<T> {
-    private int INITIAL_SIZE = 10;
+    private static final int INITIAL_SIZE = 10;
     private T[] values = (T[]) new Object[INITIAL_SIZE];
     private int size = 0;
 
@@ -77,7 +77,7 @@ public class ListImpl<T> implements List<T> {
     @Override
     public T remove(T value) {
         for (int index = 0; index < values.length; index++) {
-            if (values[index] == value) {
+            if (values[index].equals(value)) {
                 remove(index);
             }
         }
