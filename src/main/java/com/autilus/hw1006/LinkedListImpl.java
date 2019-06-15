@@ -1,58 +1,74 @@
 package com.autilus.hw1006;
 
+import java.util.NoSuchElementException;
+
 public class LinkedListImpl<T> implements List<T> {
+    Node<T> first;
+    Node<T> last;
     private int size = 0;
-    private Node<T> first;
-    private Node<T> last;
 
-    private boolean isCorrectIndex(int index) {
-        if (index < 0 || index > size) {
-            throw new ArrayIndexOutOfBoundsException("index incorrect " + index);
-        }
-        return true;
+    private void checkIndex(int index) {
+        if (index < 0 || index > size) throw new NoSuchElementException();
     }
 
-    private Node<T> currentNode(int index) {
-        Node<T> current = first;
-        for (int i = 0; i < index; i++) {
-            current = current.next;
-        }
-        return current;
-    }
-
-    @Override
-    public void add(T t) {
-        Node<T> newNode = new Node<>(t);
-        if (isEmpty()) {
-            newNode.next = null;
-            newNode.prev = null;
-            first = newNode;
-            last = newNode;
+    private Node<T> getNodeByIndex(int index) {
+        checkIndex(index + 1);
+        Node<T> node;
+        if (index < size << 1) {
+            node = first;
+            for (int i = 0; i < index; i++) {
+                node = node.getNext();
+            }
         } else {
-            last.next = newNode;
-            newNode.prev = last;
-            last = newNode;
+            node = last;
+            for (int i = size; i > index; i--) {
+                node = node.getPrev();
+            }
         }
+        return node;
+    }
+
+    private Node<T> getNodeByValue(T value) {
+        Node<T> node = first;
+        for (int i = 0; i < size; i++) {
+            if (node.getValue().equals(value)) {
+                break;
+            } else {
+                node = node.getNext();
+            }
+        }
+        return node;
+    }
+
+    @Override
+    public void add(T value) {
+        Node<T> node = new Node<>(last, value, null);
+        if (isEmpty()) {
+            first = node;
+        } else {
+            last.setNext(node);
+        }
+        last = node;
         size++;
     }
 
     @Override
-    public void add(T t, int index) {
-        Node<T> newNode = new Node<>(t);
-        if (index == 0) {
-            add(t);
+    public void add(T value, int index) {
+        checkIndex(index);
+        if (isEmpty() || index == size) {
+            add(value);
+        } else {
+            Node<T> nextNode = getNodeByIndex(index);
+            Node<T> prevNode = nextNode.getPrev();
+            Node<T> node = new Node<>(prevNode, value, nextNode);
+            if (index == 0) {
+                first = node;
+            } else {
+                prevNode.setNext(node);
+            }
+            nextNode.setPrev(node);
+            size++;
         }
-        if (index == size) {
-            last.next = newNode;
-            last = newNode;
-        }
-        Node<T> left = currentNode(index);
-        Node<T> right = left.prev;
-        left.next = newNode;
-        right.prev = newNode;
-        newNode.next = right;
-        newNode.prev = left;
-        size++;
     }
 
     @Override
@@ -64,51 +80,51 @@ public class LinkedListImpl<T> implements List<T> {
 
     @Override
     public T get(int index) {
-        if (isCorrectIndex(index)) {
-            return currentNode(index).item;
-        }
-        return null;
+        return getNodeByIndex(index).getValue();
     }
 
-
     @Override
-    public void set(T t, int index) {
-        if (isCorrectIndex(index)) {
-            currentNode(index).item = t;
-        }
+    public void set(T value, int index) {
+        getNodeByIndex(index).setValue(value);
     }
 
     @Override
     public T remove(int index) {
-        if (!isEmpty() && isCorrectIndex(index)) {
-            Node<T> toBeRemoved = currentNode(index);
-            T t = toBeRemoved.item;
-            if (toBeRemoved == last) {
-                toBeRemoved.prev = last;
-            }
-            if (toBeRemoved == first) {
-                toBeRemoved.next = first;
-            }
-            toBeRemoved.next = null;
-            toBeRemoved.prev = null;
-            toBeRemoved.item = null;
-            size--;
+        Node<T> node = getNodeByIndex(index);
+        Node<T> prevNode = node.getPrev();
+        Node<T> nextNode = node.getNext();
+        if (index == 0) {
+            first = nextNode;
+            first.setPrev(null);
+        } else if (index + 1 == size) {
+            last = prevNode;
+            last.setNext(null);
+        } else {
+            prevNode.setNext(nextNode);
+            nextNode.setPrev(prevNode);
         }
-        return null;
+        size--;
+        return node.getValue();
     }
 
     @Override
-    public T remove(T t) {
-        if (!isEmpty()) {
-            Node<T> node = first;
-            for (int i = 0; i < size; i++) {
-                if (node.item == t) {
-                    return remove(i);
-                }
-                node = node.next;
-            }
+    public T remove(T value) {
+        Node<T> node = getNodeByValue(value);
+        Node<T> prevNode = node.getPrev();
+        Node<T> nextNode = node.getNext();
+        if (prevNode == null) {
+            first = nextNode;
+            first.setPrev(null);
+        } else if (nextNode == null) {
+            last = prevNode;
+            last.setNext(null);
+        } else {
+            prevNode.setNext(nextNode);
+            nextNode.setPrev(prevNode);
         }
-        return null;    }
+        size--;
+        return value;
+    }
 
     @Override
     public int size() {

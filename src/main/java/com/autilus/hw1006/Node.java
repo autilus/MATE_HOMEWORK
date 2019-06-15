@@ -1,11 +1,37 @@
 package com.autilus.hw1006;
 
 public class Node<T> {
-    T item;
-    Node<T> next;
-    Node<T> prev;
+    private Node<T> prev;
+    private T value;
+    private Node<T> next;
 
-    public Node(T item) {
-        this.item = item;
+    public Node(Node<T> prev, T value, Node<T> next) {
+        this.prev = prev;
+        this.value = value;
+        this.next = next;
+    }
+
+    public Node<T> getPrev() {
+        return prev;
+    }
+
+    public void setPrev(Node<T> prev) {
+        this.prev = prev;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+
+    public Node<T> getNext() {
+        return next;
+    }
+
+    public void setNext(Node<T> next) {
+        this.next = next;
     }
 }
