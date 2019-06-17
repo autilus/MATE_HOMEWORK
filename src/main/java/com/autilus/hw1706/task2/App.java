@@ -31,7 +31,6 @@ public class App {
                 it.remove();
             }
         }
-
         return set;
     }
 }
