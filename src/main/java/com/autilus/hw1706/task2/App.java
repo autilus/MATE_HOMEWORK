@@ -24,11 +24,11 @@ public class App {
         set.addAll(set1);
         set.addAll(set2);
 
-        Iterator<T> it = set.iterator();
-        while (it.hasNext()) {
-            T item = it.next();
+        Iterator<T> iterator = set.iterator();
+        while (iterator.hasNext()) {
+            T item = iterator.next();
             if (set1.contains(item) && set2.contains(item)) {
-                it.remove();
+                iterator.remove();
             }
         }
         return set;
