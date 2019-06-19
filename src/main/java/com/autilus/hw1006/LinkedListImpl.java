@@ -3,8 +3,8 @@ package com.autilus.hw1006;
 import java.util.NoSuchElementException;
 
 public class LinkedListImpl<T> implements List<T> {
-    Node<T> first;
-    Node<T> last;
+    private Node<T> first;
+    private Node<T> last;
     private int size = 0;
 
     private void checkIndex(int index) {
@@ -93,6 +93,7 @@ public class LinkedListImpl<T> implements List<T> {
         Node<T> node = getNodeByIndex(index);
         Node<T> prevNode = node.getPrev();
         Node<T> nextNode = node.getNext();
+        T result = node.getValue();
         if (index == 0) {
             first = nextNode;
             first.setPrev(null);
@@ -104,12 +105,16 @@ public class LinkedListImpl<T> implements List<T> {
             nextNode.setPrev(prevNode);
         }
         size--;
-        return node.getValue();
+        node = null;
+        return result;
     }
 
     @Override
     public T remove(T value) {
         Node<T> node = getNodeByValue(value);
+        if (node == null) {
+            throw new NoSuchElementException();
+        }
         Node<T> prevNode = node.getPrev();
         Node<T> nextNode = node.getNext();
         if (prevNode == null) {
@@ -123,6 +128,7 @@ public class LinkedListImpl<T> implements List<T> {
             nextNode.setPrev(prevNode);
         }
         size--;
+        node = null;
         return value;
     }
 
@@ -135,4 +141,41 @@ public class LinkedListImpl<T> implements List<T> {
     public boolean isEmpty() {
         return size == 0;
     }
+
+    private static class Node<T> {
+        private Node<T> prev;
+        private T value;
+        private Node<T> next;
+
+        public Node(Node<T> prev, T value, Node<T> next) {
+            this.prev = prev;
+            this.value = value;
+            this.next = next;
+        }
+
+        public Node<T> getPrev() {
+            return prev;
+        }
+
+        public void setPrev(Node<T> prev) {
+            this.prev = prev;
+        }
+
+        public T getValue() {
+            return value;
+        }
+
+        public void setValue(T value) {
+            this.value = value;
+        }
+
+        public Node<T> getNext() {
+            return next;
+        }
+
+        public void setNext(Node<T> next) {
+            this.next = next;
+        }
+    }
+
 }
