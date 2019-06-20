@@ -30,20 +30,21 @@ public class HashMapImpl<V, K> implements HashMap<V, K> {
     }
 
     private void putNode(V value, K key, Node<V, K>[] nodes) {
-        int i = (nodes.length - 1) & hash(key);
-        Node<V, K> node = new Node<V, K>(null, key, value, hash(key));
-        if (nodes[i] == null) {
-            nodes[i] = node;
+        int index = (nodes.length - 1) & hash(key);
+        if (key == null) { key=(K)"0"; }
+        Node<V, K> node = new Node<>(null, key, value, hash(key));
+        if (nodes[index] == null) {
+            nodes[index] = node;
             loading += (float) 1 / (nodes.length - 1);
         } else {
-            if (key.equals(nodes[i].getKey())) {
-                nodes[i].setValue(value);
+            if (key.equals(nodes[index].getKey())) {
+                nodes[index].setValue(value);
             } else {
-                Node<V, K> basketNode = nodes[i];
+                Node<V, K> basketNode = nodes[index];
                 while (basketNode.getNext() != null) {
                     basketNode = basketNode.next;
-                    if (hash(key) == nodes[i].getHash()) {
-                        nodes[i].setValue(value);
+                    if (value.equals(nodes[index].value) && hash(key) == nodes[index].getHash()) {
+                        nodes[index].setValue(value);
                         return;
                     }
                 }
