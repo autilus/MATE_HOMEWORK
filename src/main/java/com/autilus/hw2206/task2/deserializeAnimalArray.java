@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
 public class deserializeAnimalArray {
-    public static Animal[] deserializeAnimalArray(byte[] data) {
+    public static Animal[] DeserializeAnimalArray(byte[] data) {
         int count = 0;
         Animal[] animals = new Animal[0];
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);

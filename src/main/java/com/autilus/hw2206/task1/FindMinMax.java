@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class App {
+public class FindMinMax {
     public static <T> void findMinMax(
             Stream<? extends T> stream,
             Comparator<? super T> order,
