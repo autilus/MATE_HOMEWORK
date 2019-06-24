@@ -16,7 +16,7 @@ public class deserializeAnimalArray {
                 animals[i] = animal;
             }
         } catch (Exception e) {
-            throw new java.lang.IllegalArgumentException();
+            throw new IllegalArgumentException();
         }
         return animals;
     }
