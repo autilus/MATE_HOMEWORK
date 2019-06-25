@@ -3,8 +3,8 @@ package com.autilus.hw2206.task2;
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
-public class deserializeAnimalArray {
-    public static Animal[] DeserializeAnimalArray(byte[] data) {
+public class DeserializeAnimalArray {
+    public static Animal[] deserializeAnimalArray(byte[] data) {
         int count = 0;
         Animal[] animals = new Animal[0];
         ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
