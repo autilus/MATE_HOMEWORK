@@ -20,14 +20,8 @@ public class Main {
                 "сумму и риск через пробел");
         ConsoleHandler.handle();
         BetDaoImpl betDao = new BetDaoImpl();
-        UserDaoImpl userDao=new UserDaoImpl();
+        UserDaoImpl userDao = new UserDaoImpl();
         System.out.println(betDao.getAll());
         System.out.println(userDao.getAll());
     }
-
-
 }
-
-
-
-
