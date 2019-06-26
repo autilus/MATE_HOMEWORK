@@ -29,4 +29,3 @@ public static class MailService<T> implements Consumer<Send<T>> {
 
     private Map<String, List<T>> box;
 }
-
