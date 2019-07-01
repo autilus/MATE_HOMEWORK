@@ -8,8 +8,10 @@ import com.autilus.hw2706.model.User;
 import java.util.Scanner;
 
 public class ConsoleHandler {
+
     @Inject
     private static DaoInterface<User> userDao;
+
     @Inject
     private static DaoInterface<Bet> betDao;
 

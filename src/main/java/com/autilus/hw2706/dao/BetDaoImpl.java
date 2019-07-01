@@ -11,11 +11,11 @@ import java.util.List;
 public class BetDaoImpl implements DaoInterface<Bet> {
     @Override
     public void add(Bet bet) {
-        Storage.bets.add(bet);
+        Storage.BETS.add(bet);
     }
 
     @Override
     public List<Bet> getAll() {
-        return Storage.bets;
+        return Storage.BETS;
     }
 }

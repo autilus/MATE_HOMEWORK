@@ -6,7 +6,6 @@ import com.autilus.hw2706.dao.UserDaoImpl;
 import com.autilus.hw2706.lib.Injector;
 
 public class Main {
-
     static {
         try {
             Injector.injectDependency();
