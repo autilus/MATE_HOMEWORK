@@ -15,12 +15,8 @@ public static class MailService<T> implements Consumer<Send<T>> {
     }
 
     public MailService() {
-        box = new HashMap<String, List<T>>() {
-            @Override
-            public List<T> get(Object key) {
-                return super.getOrDefault(key, new LinkedList<T>());
-            }
-        };
+        box = (HashMap) get(key) ->{ return super.getOrDefault(key, new LinkedList<T>()); };
+
     }
 
     public Map<String, List<T>> getMailBox() {
