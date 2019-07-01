@@ -1,5 +1,6 @@
 package com.autilus.hw2206.task1;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -11,11 +12,13 @@ public class FindMinMax {
             Stream<? extends T> stream,
             Comparator<? super T> order,
             BiConsumer<? super T, ? super T> minMaxConsumer) {
-        List<T> list=stream.sorted(order).collect(Collectors.toList());
-        if (!list.isEmpty()){
-            minMaxConsumer.accept(list.get(0),list.get(list.size()-1));
-        }else {
-            minMaxConsumer.accept(null,null);
+        List<T> list = stream.collect(Collectors.toList());
+        T min = Collections.min(list, order);
+        T max = Collections.max(list, order);
+        if (!list.isEmpty()) {
+            minMaxConsumer.accept(min, max);
+        } else {
+            minMaxConsumer.accept(null, null);
         }
     }
 }
