@@ -11,25 +11,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static com.autilus.hw0207.main.Main.RESPONCE_CONTENT_TYPE;
+
 @AllArgsConstructor
 public class SignInServlet extends HttpServlet {
     private AccountService accountService;
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String page = PageGenerator.instance().getPage("signin.html", accountService.getData());
         response.getWriter().println(page);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         @NonNull
         String login = request.getParameter("login");
 
         @NonNull
         String password = request.getParameter("password");
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType(RESPONCE_CONTENT_TYPE);
         if (login.isEmpty() || password.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         } else {
