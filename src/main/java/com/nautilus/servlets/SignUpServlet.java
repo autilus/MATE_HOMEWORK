@@ -1,8 +1,8 @@
-package com.autilus.hw0207.servlets;
+package com.nautilus.servlets;
 
-import com.autilus.hw0207.service.AccountService;
-import com.autilus.hw0207.templater.PageGenerator;
-import lombok.AllArgsConstructor;
+import com.nautilus.model.User;
+import com.nautilus.service.UserService;
+import com.nautilus.templater.PageGenerator;
 import lombok.NonNull;
 
 import javax.servlet.http.HttpServlet;
@@ -10,16 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.autilus.hw0207.main.Main.RESPONCE_CONTENT_TYPE;
+import static com.nautilus.App.RESPONCE_CONTENT_TYPE;
 
-@AllArgsConstructor
+
 public class SignUpServlet extends HttpServlet {
 
-    private AccountService accountService;
+    private UserService userService;
+    private User user;
+
+    public SignUpServlet(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.getWriter().println(PageGenerator.instance().getPage("signup.html", accountService.getData()));
+        response.getWriter().println(PageGenerator.instance().getPage("/static/signup.html", null));
         response.setContentType(RESPONCE_CONTENT_TYPE);
         response.setStatus(HttpServletResponse.SC_OK);
     }
@@ -32,7 +37,10 @@ public class SignUpServlet extends HttpServlet {
 
         @NonNull
         String password = request.getParameter("password");
-        accountService.getData().put(login, password);
+        user = new User();
+        user.setLogin(login);
+        user.setPassword(password);
+        userService.saveUser(user);
         response.getWriter().println("Account created");
         response.setStatus(HttpServletResponse.SC_OK);
     }

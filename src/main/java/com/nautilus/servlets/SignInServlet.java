@@ -1,25 +1,28 @@
-package com.autilus.hw0207.servlets;
+package com.nautilus.servlets;
 
-import com.autilus.hw0207.service.AccountService;
-import com.autilus.hw0207.templater.PageGenerator;
-import lombok.AllArgsConstructor;
+import com.nautilus.model.User;
+import com.nautilus.service.UserService;
+import com.nautilus.templater.PageGenerator;
 import lombok.NonNull;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.autilus.hw0207.main.Main.RESPONCE_CONTENT_TYPE;
+import static com.nautilus.App.RESPONCE_CONTENT_TYPE;
 
-@AllArgsConstructor
 public class SignInServlet extends HttpServlet {
-    private AccountService accountService;
+    private UserService userService;
+    private User user;
+
+    public SignInServlet(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String page = PageGenerator.instance().getPage("signin.html", accountService.getData());
+        String page = PageGenerator.instance().getPage("static/signin.html", null);
         response.getWriter().println(page);
     }
 
@@ -35,12 +38,16 @@ public class SignInServlet extends HttpServlet {
         if (login.isEmpty() || password.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         } else {
-            if (accountService.getData().containsKey(login) && accountService.getData().containsValue(password)) {
-                response.getWriter().println("Authorized: " + login);
-                response.setStatus(HttpServletResponse.SC_OK);
-            } else {
+            boolean status = false;
+            try {
+                status = userService.findIdByLogin(login).equals(userService.findIdByPassword(password));
+            } catch (Exception e) {
                 response.getWriter().println("Unauthorized");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+            if (status) {
+                response.getWriter().println("Authorized: " + login);
+                response.setStatus(HttpServletResponse.SC_OK);
             }
         }
     }

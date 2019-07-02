@@ -1,4 +1,4 @@
-package com.autilus.hw0207.templater;
+package com.nautilus.templater;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -11,7 +11,7 @@ import java.io.Writer;
 import java.util.Map;
 
 public class PageGenerator {
-    private static final String HTML_DIR = "src/main/resources";
+    private static final String HTML_DIR = "/src/main/resources";
 
     private static PageGenerator pageGenerator;
     private final Configuration configuration;
