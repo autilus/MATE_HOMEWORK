@@ -14,7 +14,6 @@ import static com.nautilus.App.RESPONCE_CONTENT_TYPE;
 
 public class SignInServlet extends HttpServlet {
     private UserServiceImpl userService;
-    private User user;
 
     public SignInServlet(UserServiceImpl userService) {
         this.userService = userService;
