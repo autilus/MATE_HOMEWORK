@@ -1,41 +1,21 @@
 package com.nautilus.service;
 
-import com.nautilus.dao.UserDao;
 import com.nautilus.model.User;
 
 import java.util.List;
 
-public class UserService {
+interface UserService {
+    User findById(int id);
 
-    private UserDao usersDao = new UserDao();
+    Long findIdByLogin(String login);
 
-    public UserService() {
-    }
+    Long findIdByPassword(String password);
 
-    public User findUser(int id) {
-        return usersDao.findById(id);
-    }
-    public Long findIdByLogin(String login){
-        return usersDao.findIdByLogin(login);
-    }
-    public Long findIdByPassword(String password){
-        return usersDao.finIdByPassword(password);
-    }
+    void save(User user);
 
-    public void saveUser(User user) {
-        usersDao.save(user);
-    }
+    void update(User user);
 
-    public void deleteUser(User user) {
-        usersDao.delete(user);
-    }
+    void delete(User user);
 
-    public void updateUser(User user) {
-        usersDao.update(user);
-    }
-
-    public List<User> findAllUsers() {
-        return usersDao.findAll();
-    }
-
+    List<User> findAll();
 }

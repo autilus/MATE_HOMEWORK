@@ -1,7 +1,7 @@
 package com.nautilus.servlets;
 
 import com.nautilus.model.User;
-import com.nautilus.service.UserService;
+import com.nautilus.service.UserServiceImpl;
 import com.nautilus.templater.PageGenerator;
 import lombok.NonNull;
 
@@ -13,10 +13,10 @@ import java.io.IOException;
 import static com.nautilus.App.RESPONCE_CONTENT_TYPE;
 
 public class SignInServlet extends HttpServlet {
-    private UserService userService;
+    private UserServiceImpl userService;
     private User user;
 
-    public SignInServlet(UserService userService) {
+    public SignInServlet(UserServiceImpl userService) {
         this.userService = userService;
     }
 

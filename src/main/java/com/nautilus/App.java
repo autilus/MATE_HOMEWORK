@@ -1,6 +1,6 @@
 package com.nautilus;
 
-import com.nautilus.service.UserService;
+import com.nautilus.service.UserServiceImpl;
 import com.nautilus.servlets.SignInServlet;
 import com.nautilus.servlets.SignUpServlet;
 import org.eclipse.jetty.server.Server;
@@ -11,7 +11,7 @@ public class App {
     public static final String RESPONCE_CONTENT_TYPE = "text/html;charset=utf-8";
 
     public static void main(String[] args) throws Exception {
-        UserService userService = new UserService();
+        UserServiceImpl userService = new UserServiceImpl();
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignInServlet(userService)), "/signin");
         context.addServlet(new ServletHolder(new SignUpServlet(userService)), "/signup");

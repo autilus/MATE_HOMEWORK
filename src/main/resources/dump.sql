@@ -12,4 +12,3 @@ create table users
 
 alter table users
     owner to maksymskripai;
-

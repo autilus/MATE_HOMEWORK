@@ -1,7 +1,7 @@
 package com.nautilus.servlets;
 
 import com.nautilus.model.User;
-import com.nautilus.service.UserService;
+import com.nautilus.service.UserServiceImpl;
 import com.nautilus.templater.PageGenerator;
 import lombok.NonNull;
 
@@ -15,10 +15,10 @@ import static com.nautilus.App.RESPONCE_CONTENT_TYPE;
 
 public class SignUpServlet extends HttpServlet {
 
-    private UserService userService;
+    private UserServiceImpl userService;
     private User user;
 
-    public SignUpServlet(UserService userService) {
+    public SignUpServlet(UserServiceImpl userService) {
         this.userService = userService;
     }
 
@@ -40,7 +40,7 @@ public class SignUpServlet extends HttpServlet {
         user = new User();
         user.setLogin(login);
         user.setPassword(password);
-        userService.saveUser(user);
+        userService.save(user);
         response.getWriter().println("Account created");
         response.setStatus(HttpServletResponse.SC_OK);
     }
