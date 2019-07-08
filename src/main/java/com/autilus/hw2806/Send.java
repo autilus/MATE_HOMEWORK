@@ -1,6 +1,6 @@
 package com.autilus.hw2806;
 
-public static class Send<T> {
+public class Send<T> {
 
     private final String from;
     private final String to;

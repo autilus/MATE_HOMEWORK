@@ -1,12 +1,11 @@
 package com.autilus.hw2806;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 
-public static class MailService<T> implements Consumer<Send<T>> {
+public class MailService<T> implements Consumer<Send<T>> {
+    private Map<String, List<T>> box;
+
     @Override
     public void accept(Send<T> t) {
         List<T> v = box.get(t.getTo());
@@ -18,8 +17,7 @@ public static class MailService<T> implements Consumer<Send<T>> {
         box = new HashMap<String, List<T>>() {
             @Override
             public List<T> get(Object key) {
-                return getOrDefault(key, Collections.emptyList());
-//                return getOrDefault(key, new LinkedList<T>());
+                return getOrDefault(key, new LinkedList<T>());
             }
         };
     }
@@ -27,6 +25,4 @@ public static class MailService<T> implements Consumer<Send<T>> {
     public Map<String, List<T>> getMailBox() {
         return box;
     }
-
-    private Map<String, List<T>> box;
 }
